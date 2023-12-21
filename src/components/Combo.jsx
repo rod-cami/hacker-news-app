@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './styles/Combo.css'
 import ComboItem from './ComboItem';
 import images from '../img/images';
+import { useNavigate } from 'react-router-dom';
 
 
 const Combo = ({ text = "", itemSelectedEvent = null, startIndex =-1}) => {
@@ -29,6 +30,16 @@ const Combo = ({ text = "", itemSelectedEvent = null, startIndex =-1}) => {
 
     const focusLost = () => {
         setOpen(false);
+    }
+
+    const navigate = useNavigate();
+
+    const handleSelect = (e) => {
+        const query = e.target.value;
+        if (query === "select") {
+            return;
+        }
+        navigate(`/?query=${query}`);
     }
 
     const getHeader = () => {
@@ -71,7 +82,7 @@ const Combo = ({ text = "", itemSelectedEvent = null, startIndex =-1}) => {
 
     return (
 
-        <div className='container' onBlur={focusLost}>
+        <div className='container' onChange={handleSelect} onBlur={focusLost}>
             {getHeader()}
             <div className='popup' id={isOpen ? 'visible' : 'hidden'}>
                 {getItems()}

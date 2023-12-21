@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import './App.css';
 import Combo from './components/Combo';
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import MainComponent from "./components/MainComponent";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-
-  const [sindex, setSindex] = useState(-1);
-
-  const selectedIndex = (index) => {
-    setSindex(index);
-  };
-
-  const showIndex = () => {
-    alert("Selected index: " + sindex)
-  }
-
+  const [activeTab, setActiveTab] = useState('Alls');
   return (
     <div className="App">
-      <Combo text='Select an option' itemSelectedEvent={selectedIndex} startIndex="0"/>
-      <button onClick={showIndex}>Consult selected index</button>
+      <Header/>
+      {/* <Combo text='Select an option' itemSelectedEvent={selectedIndex} startIndex="0"/>
+      <button onClick={showIndex}>Consult selected index</button> */}
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainComponent activeTab={activeTab}/>}/>
+        </Routes>
+      </Router>
     </div>
 
   );
